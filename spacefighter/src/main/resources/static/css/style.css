@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+body{
+	text-align: center;
+	background-image: url("/img/spacejet.jpg");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100%;
+}
+
+table{
+	width: 40%;
+	border: 1px solid  #554616;
+	margin-top: 250px;
+	margin-left: 600px;
+	border-radius: 10px;
+}
+
+td, tr {
+	
+	border: 1px solid  #554616;
+	height: 40px;
+	width:  40px;
+	border-radius: 10px;
+}

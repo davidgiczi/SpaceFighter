@@ -1,0 +1,8 @@
+com\david\giczi\spacefighter\controller\SpaceFighterGameController.class
+com\david\giczi\spacefighter\domain\Component.class
+com\david\giczi\spacefighter\service\SpaceFighterGameService.class
+com\david\giczi\spacefighter\SpacefighterApplication.class
+com\david\giczi\spacefighter\config\GameParam.class
+META-INF\spring-configuration-metadata.json
+com\david\giczi\spacefighter\config\Config.class
+com\david\giczi\spacefighter\service\SpaceFighterGameServiceImpl.class
