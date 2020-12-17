@@ -9,6 +9,7 @@ public class GameParam {
 
 	private int board_rows;
 	private int board_cols;
+	private int jet_value;
 	
 	
 	public int getBoard_rows() {
@@ -25,6 +26,13 @@ public class GameParam {
 	public void setBoard_cols(int board_cols) {
 		this.board_cols = board_cols;
 	}
-	
 
+	public int getJet_value() {
+		return jet_value;
+	}
+
+	public void setJet_value(int jet_value) {
+		this.jet_value = jet_value;
+	}
+	
 }
