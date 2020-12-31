@@ -9,17 +9,22 @@ body{
 }
 
 table{
-	width: 40%;
+	width: 37%;
 	border: 1px solid  #554616;
-	margin-top: 250px;
-	margin-left: 600px;
-	border-radius: 10px;
+	margin-top: 130px;
+	margin-left: 630px;
+	border-radius: 80px;
 }
 
 td, tr {
 	
-	border: 1px solid  #554616;
+	border: 1px solid #554616;
 	height: 40px;
 	width:  40px;
 	border-radius: 10px;
+}
+
+font{
+	font-size: 100px;
+	color: orange;
 }

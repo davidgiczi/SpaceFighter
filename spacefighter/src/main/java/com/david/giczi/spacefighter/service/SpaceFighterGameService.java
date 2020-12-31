@@ -16,4 +16,6 @@ public interface SpaceFighterGameService {
 	List<Component> comingMeteor(List<Component> meteor);
 	List<Component> growMeteor(List<Component> meteor);
 	String createResponseString(Component jet, List<Component> meteor, ResponseType type);
+	boolean isJetCollidedWithMeteor(Component jet, List<Component> meteor);
+
 }

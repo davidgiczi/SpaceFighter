@@ -6,5 +6,4 @@ public enum ResponseType {
 	JET_LEFT,
 	JET_RIGHT,
 	METEOR
-	
 }

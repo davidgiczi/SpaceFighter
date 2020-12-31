@@ -60,11 +60,12 @@ public class SpaceFighterGameController {
 		service.initGame();
 		model.addAttribute("board_rows", Config.BOARD_ROWS);
 		model.addAttribute("board_cols", Config.BOARD_COLS);
-		int meteorIndex = (int)(Math.random() * Config.BOARD_COLS);
+		model.addAttribute("jet_position", Config.JET_POSITION);
+		int meteorIndex = (int)(Math.random() * Config.BOARD_ROWS);
 		model.addAttribute("board", service.createGameBoard(meteorIndex));
 		model.addAttribute("meteorIndex", meteorIndex);
 		request.getSession().setAttribute("meteor", Arrays.asList(new Component(meteorIndex)));
-		request.getSession().setAttribute("jet",  new Component(Config.JET_VALUE));
+		request.getSession().setAttribute("jet",  new Component(Config.JET_POSITION));
 		
 		return "gameboard";
 	}
@@ -74,8 +75,23 @@ public class SpaceFighterGameController {
 		
 		@SuppressWarnings("unchecked")
 		List<Component> meteor = (List<Component>) request.getSession().getAttribute("meteor");
+		Component jet = (Component) request.getSession().getAttribute("jet");
 		
-		meteor = service.growMeteor(meteor);
+		if(service.isJetCollidedWithMeteor(jet, meteor)) {
+
+			response.getWriter().append("collision");
+		}
+		else if(meteor.size() < Config.BOARD_ROWS - 2) {
+			meteor = service.growMeteor(meteor);	
+		}
+		else if(meteor.size() == Config.BOARD_ROWS) {
+			meteor = createMeteor(meteor);
+		}
+		else {
+			meteor = service.comingMeteor(meteor);
+			meteor.add(new Component(-1));
+		}
+		
 		
 		response.getWriter().append(service.createResponseString(null, meteor, ResponseType.METEOR));
 		
@@ -100,5 +116,9 @@ public class SpaceFighterGameController {
 		
 	}
 	
-	
+	private List<Component> createMeteor(List<Component> meteor){
+		meteor.clear();
+		int meteorIndex = (int)(Math.random() * Config.BOARD_ROWS);
+		return Arrays.asList(new Component(meteorIndex));
+	}
 }
