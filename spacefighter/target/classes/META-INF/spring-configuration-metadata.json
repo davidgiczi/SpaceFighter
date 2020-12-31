@@ -10,17 +10,20 @@
     {
       "name": "param.board-cols",
       "type": "java.lang.Integer",
-      "sourceType": "com.david.giczi.spacefighter.config.GameParam"
+      "sourceType": "com.david.giczi.spacefighter.config.GameParam",
+      "defaultValue": 0
     },
     {
       "name": "param.board-rows",
       "type": "java.lang.Integer",
-      "sourceType": "com.david.giczi.spacefighter.config.GameParam"
+      "sourceType": "com.david.giczi.spacefighter.config.GameParam",
+      "defaultValue": 0
     },
     {
-      "name": "param.jet-value",
+      "name": "param.jet-position",
       "type": "java.lang.Integer",
-      "sourceType": "com.david.giczi.spacefighter.config.GameParam"
+      "sourceType": "com.david.giczi.spacefighter.config.GameParam",
+      "defaultValue": 0
     }
   ],
   "hints": []

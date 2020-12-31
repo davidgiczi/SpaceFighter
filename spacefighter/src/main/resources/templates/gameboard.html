@@ -7,8 +7,9 @@
 </head>
 <body>
 
+<font th:id="time"><b>[0005]</b></font>
 
-<table>
+<table id="tab">
 
 <tr th:each="x: ${#numbers.sequence(0, board_rows - 1)}">
 <td th:each="y: ${#numbers.sequence(0, board_cols - 1)}" th:id="${x * board_cols + y}"
@@ -18,6 +19,9 @@
 </table>
 
 <input type="hidden" th:value="${meteorIndex}" id="meteor">
+<input type="hidden" th:value="${board_rows}" id="rows">
+<input type="hidden" th:value="${board_cols}" id="cols">
+<input type="hidden" th:value="${jet_position}" id="jet-position">
 
 </body>
 

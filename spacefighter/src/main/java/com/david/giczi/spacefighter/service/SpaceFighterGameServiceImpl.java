@@ -30,7 +30,7 @@ public class SpaceFighterGameServiceImpl implements SpaceFighterGameService {
 		
 		Config.BOARD_ROWS = param.getBoard_rows();
 		Config.BOARD_COLS = param.getBoard_cols();
-		Config.JET_VALUE = param.getJet_value();
+		Config.JET_POSITION = param.getJet_position();
 	}
 
 
@@ -48,7 +48,7 @@ public class SpaceFighterGameServiceImpl implements SpaceFighterGameService {
 				if(component.getLogicBoardIndex() == meteorIndex) {
 					component.setColor(ComponentColor.METEOR);
 				}
-				if(component.getLogicBoardIndex() == Config.JET_VALUE) {
+				if(component.getLogicBoardIndex() == Config.JET_POSITION) {
 					component.setColor(ComponentColor.JET);
 				}
 				
@@ -59,7 +59,7 @@ public class SpaceFighterGameServiceImpl implements SpaceFighterGameService {
 		return gameBoard;
 	}
 
-
+	
 
 	@Override
 	public Component goJetLeft(Component jet) {
@@ -108,7 +108,8 @@ public class SpaceFighterGameServiceImpl implements SpaceFighterGameService {
 			
 			Component meteor_pcs = new Component(meteor_x, meteor_y);
 			
-			if( !meteorStore.contains(meteor_pcs) ) {
+			if(!meteorStore.contains(meteor_pcs)) {
+				
 				meteorStore.add(meteor_pcs);
 			}
 			else {
@@ -123,7 +124,7 @@ public class SpaceFighterGameServiceImpl implements SpaceFighterGameService {
 	@Override
 	public List<Component> comingMeteor(List<Component> meteor){
 		
-		meteor.forEach(c -> c.setViewBoardCoords(c.getViewBoard_x() + 1, c.getViewBoard_y()));
+		meteor.stream().filter(c -> c.getLogicBoardIndex() != -1).forEach(c -> c.setViewBoardCoords(c.getViewBoard_x() + 1, c.getViewBoard_y()));
 		
 		return meteor;
 	}
@@ -148,7 +149,7 @@ public class SpaceFighterGameServiceImpl implements SpaceFighterGameService {
 		break;
 		case METEOR:
 		resp.append("meteor_");
-		meteor.forEach(c -> resp.append(c.getLogicBoardIndex()).append("_"));
+		meteor.stream().filter(c -> c.getLogicBoardIndex() != -1).forEach(c -> resp.append(c.getLogicBoardIndex()).append("_"));
 		resp.deleteCharAt(resp.toString().length() - 1);
 		break;
 		default:
@@ -158,7 +159,14 @@ public class SpaceFighterGameServiceImpl implements SpaceFighterGameService {
 		return resp.toString();
 	}
 
-	
+
+
+	@Override
+	public boolean isJetCollidedWithMeteor(Component jet, List<Component> meteor) {
+		
+		return meteor.contains(jet);
+	}
+
 	
 	
 }
