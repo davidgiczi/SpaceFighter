@@ -3,12 +3,14 @@ package com.david.giczi.spacefighter.controller;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import com.david.giczi.spacefighter.config.Config;
 import com.david.giczi.spacefighter.domain.Component;
 import com.david.giczi.spacefighter.service.SpaceFighterGameService;
@@ -20,14 +22,14 @@ public class SpaceFighterGameController {
 	
 	private SpaceFighterGameService service;
 	
-	
 	@Autowired
 	public void setService(SpaceFighterGameService service) {
 		this.service = service;
-	}
+	}	
 	
-	@RequestMapping("/SpaceFighter/ajaxRequest")
-	public void ajaxResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+	@RequestMapping("/SpaceFighter/playing/ajaxRequest")
+	public void ajaxResponse(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
@@ -45,16 +47,18 @@ public class SpaceFighterGameController {
 		case "goJetRight":
 			goJetRight(request, response);
 			break;
-
 		default:
 		}
 
 	}
-	
-	
-	
+		
 	@RequestMapping("/SpaceFighter")
-	public String initGame(Model model, HttpServletRequest request) {
+	public String startGame() {
+		return "startboard";
+	}
+	
+	@RequestMapping("/SpaceFighter/playing")
+	public String initGame(HttpServletRequest request, Model model) {
 		
 		request.getSession().invalidate();
 		service.initGame();
@@ -66,8 +70,17 @@ public class SpaceFighterGameController {
 		model.addAttribute("meteorIndex", meteorIndex);
 		request.getSession().setAttribute("meteor", Arrays.asList(new Component(meteorIndex)));
 		request.getSession().setAttribute("jet",  new Component(Config.JET_POSITION));
-		
+			
 		return "gameboard";
+	}
+	
+	
+	@RequestMapping("/SpaceFighter/playing/theEnd")
+	public String finishTheGame(@RequestParam String result, Model model)  {
+		
+		model.addAttribute("result", result);
+		
+		return "finishboard";
 	}
 	
 	
@@ -121,4 +134,5 @@ public class SpaceFighterGameController {
 		int meteorIndex = (int)(Math.random() * Config.BOARD_ROWS);
 		return Arrays.asList(new Component(meteorIndex));
 	}
+	
 }
