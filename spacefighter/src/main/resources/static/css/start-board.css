@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+body{
+	text-align: center;
+	background-image: url("/img/startjet.jpg");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100%;
+}
+
+font{
+	font-size: 100px;
+	color: orange;
+}
