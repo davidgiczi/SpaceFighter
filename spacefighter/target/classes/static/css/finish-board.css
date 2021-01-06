@@ -7,3 +7,17 @@ body{
 	background-attachment: fixed;
 	background-size: 100%;
 }
+
+table{
+	width: 100%;
+	border: none;
+	border-radius: 80px;
+}
+
+td, tr {
+	
+	border: none;
+	height: 40px;
+	width:  40px;
+	border-radius: 10px;
+}

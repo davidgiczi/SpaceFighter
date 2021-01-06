@@ -7,6 +7,16 @@
 </head>
 <body>
 
+
+<table>
+
+<tr th:each="x: ${#numbers.sequence(0, 22)}">
+<td th:each="y: ${#numbers.sequence(0, 29)}" th:id="${x * 30 + y}"/>
+</tr>
+
+</table>
+
+
 <input type="hidden" id="msg" th:value="${result}">
 
 </body>
