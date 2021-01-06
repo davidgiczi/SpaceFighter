@@ -124,7 +124,7 @@ function displayMeteor(){
 function collision(){
 
 	 blinkingJetWindow();
-	 setTimeout(explodeMeteor, 2000);
+	 setTimeout(explodeMeteor, 1000);
 }
 
 function blinkingJetWindow(){
@@ -321,6 +321,5 @@ function goFinishPage(){
 	
 	location.href = document.location.protocol + "//" + document.location.host +
             document.location.pathname + "/theEnd?result=" + score;
-	 m
 }
 
