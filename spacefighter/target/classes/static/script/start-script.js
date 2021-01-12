@@ -4,6 +4,7 @@
 var secCounter = 5;
 var timer = setInterval(countDown, 1000);
 
+
 function countDown(){
 	
 	if(secCounter === 0){
