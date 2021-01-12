@@ -1,15 +1,17 @@
 package com.david.giczi.spacefighter.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.david.giczi.spacefighter.config.Config;
 import com.david.giczi.spacefighter.config.GameParam;
 import com.david.giczi.spacefighter.domain.Component;
+import com.david.giczi.spacefighter.domain.SoundPlayer;
 import com.david.giczi.spacefighter.utils.ComponentColor;
 import com.david.giczi.spacefighter.utils.ResponseType;
+
 
 @Service
 public class SpaceFighterGameServiceImpl implements SpaceFighterGameService {
@@ -167,6 +169,18 @@ public class SpaceFighterGameServiceImpl implements SpaceFighterGameService {
 		return meteor.contains(jet);
 	}
 
-	
+
+
+	@Override
+	public SoundPlayer playSoundsOneAfterAnother(String... filePaths) {
+		
+		List<String> filePathStore = Arrays.asList(filePaths);
+		SoundPlayer player = new SoundPlayer(filePathStore);
+		player.start();
+		
+		return player;
+		
+	}
+
 	
 }

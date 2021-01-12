@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.david.giczi.spacefighter.config.Config;
 import com.david.giczi.spacefighter.domain.Component;
+import com.david.giczi.spacefighter.domain.SoundPlayer;
 import com.david.giczi.spacefighter.service.SpaceFighterGameService;
 import com.david.giczi.spacefighter.utils.ResponseType;
+import com.david.giczi.spacefighter.utils.Sound;
+
 
 @Controller
 public class SpaceFighterGameController {
@@ -27,9 +30,11 @@ public class SpaceFighterGameController {
 		this.service = service;
 	}	
 	
-
+	
 	@RequestMapping("/SpaceFighter/playing/ajaxRequest")
 	public void ajaxResponse(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		
+		playBackgroundSoundsAgain(request);
 		
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
@@ -49,11 +54,15 @@ public class SpaceFighterGameController {
 			break;
 		default:
 		}
-
+	
+		
 	}
 		
 	@RequestMapping("/SpaceFighter")
 	public String startGame() {
+		
+		service.playSoundsOneAfterAnother(Sound.COUNTDOWN);
+	
 		return "startboard";
 	}
 	
@@ -70,7 +79,11 @@ public class SpaceFighterGameController {
 		model.addAttribute("meteorIndex", meteorIndex);
 		request.getSession().setAttribute("meteor", Arrays.asList(new Component(meteorIndex)));
 		request.getSession().setAttribute("jet",  new Component(Config.JET_POSITION));
-			
+		SoundPlayer flyingNoiseplayer = service.playSoundsOneAfterAnother(Sound.FLYING_NOISE);
+		request.getSession().setAttribute("flyingNoisePlayer", flyingNoiseplayer);
+		SoundPlayer inSpaceNoiseplayer = service.playSoundsOneAfterAnother(Sound.IN_SPACE);
+		request.getSession().setAttribute("inSpaceNoisePlayer", inSpaceNoiseplayer);
+		
 		return "gameboard";
 	}
 	
@@ -91,7 +104,10 @@ public class SpaceFighterGameController {
 		Component jet = (Component) request.getSession().getAttribute("jet");
 		
 		if(service.isJetCollidedWithMeteor(jet, meteor)) {
-
+			
+			service.playSoundsOneAfterAnother(Sound.COLLISION);
+			service.playSoundsOneAfterAnother(Sound.ALERT);
+			
 			response.getWriter().append("collision");
 		}
 		else if(meteor.size() < Config.BOARD_ROWS - 2) {
@@ -135,4 +151,27 @@ public class SpaceFighterGameController {
 		return Arrays.asList(new Component(meteorIndex));
 	}
 	
-}
+	private void playBackgroundSoundsAgain(HttpServletRequest request) {
+		
+		SoundPlayer flyingNoiseplayer = (SoundPlayer) request.getSession().getAttribute("flyingNoisePlayer");
+		SoundPlayer inSpaceNoisePlayer = (SoundPlayer) request.getSession().getAttribute("inSpaceNoisePlayer");
+			
+		if(!flyingNoiseplayer.isAlive()) {
+				flyingNoiseplayer = service.playSoundsOneAfterAnother(Sound.FLYING_NOISE);
+				request.getSession().setAttribute("flyingNoisePlayer", flyingNoiseplayer);
+			}
+				 
+		if(!inSpaceNoisePlayer.isAlive()) {
+				inSpaceNoisePlayer = service.playSoundsOneAfterAnother(Sound.IN_SPACE);
+				request.getSession().setAttribute("inSpaceNoisePlayer", inSpaceNoisePlayer);
+			}
+			
+		}
+	
+	
+		
+	}
+	
+	
+	
+
