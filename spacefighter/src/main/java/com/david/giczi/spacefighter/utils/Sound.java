@@ -7,5 +7,7 @@ public interface Sound {
 	String FLYING_NOISE = "./sounds/flyingnoise.mp3";
 	String ALERT = "./sounds/alert.mp3";
 	String IN_SPACE = "./sounds/inspace.mp3";
+	String TURN = "./sounds/left.mp3";
+	String RAND_SIGNAL = "./sounds/random.mp3";
 	
 }

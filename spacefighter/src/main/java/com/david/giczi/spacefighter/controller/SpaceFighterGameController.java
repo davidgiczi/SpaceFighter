@@ -129,6 +129,8 @@ public class SpaceFighterGameController {
 	
 	private void goJetLeft(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
+		service.playSoundsOneAfterAnother(Sound.TURN);
+		playRandSignalSound();
 		Component jet = (Component) request.getSession().getAttribute("jet");
 		jet = service.goJetLeft(jet);
 		response.getWriter().append(service.createResponseString(jet, null,  ResponseType.JET_LEFT));
@@ -138,6 +140,8 @@ public class SpaceFighterGameController {
 	
 	private void goJetRight(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
+		service.playSoundsOneAfterAnother(Sound.TURN);
+		playRandSignalSound();
 		Component jet = (Component) request.getSession().getAttribute("jet");
 		jet = service.goJetRight(jet);
 		response.getWriter().append(service.createResponseString(jet, null,  ResponseType.JET_RIGHT));
@@ -167,6 +171,13 @@ public class SpaceFighterGameController {
 			}
 			
 		}
+	
+	private void playRandSignalSound() {
+		
+		if((int) (Math.random() * 100) % 30 == 0) {
+			service.playSoundsOneAfterAnother(Sound.RAND_SIGNAL);
+		}
+	}
 	
 	
 		
